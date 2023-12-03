@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -22,14 +21,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.R
+import com.example.coffeediary.bottomBar.Screen
 import com.example.coffeediary.bounceClick
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 import com.example.coffeediary.ui.theme.djbCoffeeFamily
 
 @Composable
-fun MainScreen(){
+fun MainScreen(navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +56,7 @@ fun MainScreen(){
             modifier = Modifier
                 .width(200.dp)
                 .bounceClick(),
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.Menu.route) },
             shape = RoundedCornerShape(15.dp),
             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
         )
@@ -72,6 +74,6 @@ fun MainScreen(){
 @Composable
 fun MainPreview(){
     CoffeeDiaryTheme {
-        MainScreen()
+        MainScreen(navController = rememberNavController())
     }
 }
