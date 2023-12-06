@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.coffeediary.screens.MainScreen
 import com.example.coffeediary.screens.MenuScreen
+import com.example.coffeediary.screens.SaveNoteScreen
 
 @Composable
 fun NavGraph(
@@ -24,6 +25,11 @@ fun NavGraph(
             route = Screen.Menu.route
         ){
             MenuScreen(navController)
+        }
+        composable(
+            route = Screen.SaveNote.route
+        ){
+            SaveNoteScreen(navController)
         }
     }
 }

@@ -26,14 +26,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.R
+import com.example.coffeediary.bottomBar.Screen
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
 @Composable
 fun CoffeeCard(
     image: Int,
-    title: String
+    title: String,
+    navController: NavController
 ){
     Card(
         modifier = Modifier
@@ -65,7 +69,7 @@ fun CoffeeCard(
                 fontFamily = bebasNeueFamily)
             IconButton(
                 colors = IconButtonDefaults.iconButtonColors(MaterialTheme.colorScheme.scrim),
-                onClick = { /*TODO*/ })
+                onClick = { navController.navigate(Screen.SaveNote.route) })
             {
                 Icon(
                     imageVector = Icons.Rounded.Add,
@@ -81,7 +85,8 @@ fun MainPreview(){
     CoffeeDiaryTheme {
         CoffeeCard(
             image = R.drawable.espresso,
-            title = "cappuccino"
+            title = "cappuccino",
+            navController = rememberNavController()
         )
     }
 }

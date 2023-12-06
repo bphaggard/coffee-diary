@@ -2,15 +2,12 @@ package com.example.coffeediary.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.coffeediary.R
 import com.example.coffeediary.parts.CoffeeCard
+import com.example.coffeediary.parts.coffeeItems
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
@@ -35,50 +32,28 @@ fun MenuScreen(navController: NavController){
 
 
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .background(MaterialTheme.colorScheme.secondaryContainer),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.padding(15.dp))
-            Text(
-                modifier = Modifier.padding(end = 80.dp),
-                text = "choose your coffee:",
-                fontFamily = bebasNeueFamily,
-                fontSize = 30.sp
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            CoffeeCard(
-                image = R.drawable.espresso,
-                title = "espresso"
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            CoffeeCard(
-                image = R.drawable.americano,
-                title = "americano"
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            CoffeeCard(
-                image = R.drawable.cappuccino,
-                title = "cappuccino"
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            CoffeeCard(
-                image = R.drawable.latte,
-                title = "latte"
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            CoffeeCard(
-                image = R.drawable.flatwhite,
-                title = "flat white"
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            CoffeeCard(
-                image = R.drawable.chocolatte,
-                title = "chocolatte"
-            )
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(top = 30.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ){
+            item {
+                Text(
+                    modifier = Modifier.padding(end = 80.dp),
+                    text = "choose your coffee:",
+                    fontFamily = bebasNeueFamily,
+                    fontSize = 30.sp
+                )
+            }
+            items(coffeeItems){coffeeItem ->
+                CoffeeCard(
+                    image = coffeeItem.imageId,
+                    title = coffeeItem.title,
+                    navController)
+            }
         }
     }
 }

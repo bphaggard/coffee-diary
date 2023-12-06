@@ -57,7 +57,7 @@ fun MainScreen(navController: NavController){
                 .width(200.dp)
                 .bounceClick(),
             onClick = { navController.navigate(Screen.Menu.route) },
-            shape = RoundedCornerShape(15.dp),
+            shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
         )
         {
