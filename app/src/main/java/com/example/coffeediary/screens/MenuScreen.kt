@@ -48,7 +48,7 @@ fun MenuScreen(navController : NavController){
                 CoffeeCard(
                     image = coffeeItem.imageId,
                     title = coffeeItem.title,
-                    navController)
+                    navController = navController)
             }
         }
     }

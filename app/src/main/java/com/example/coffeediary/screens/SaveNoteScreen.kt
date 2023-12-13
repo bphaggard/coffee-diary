@@ -44,7 +44,7 @@ fun SaveNoteScreen(navController : NavController) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Coffee type")
+                    Text(text = "Coffee Type")
                 },
                 navigationIcon = {
                     IconButton(onClick = {navController.popBackStack()}) {
@@ -84,6 +84,8 @@ fun SaveNoteScreen(navController : NavController) {
 @Composable
 fun SavePreview(){
     CoffeeDiaryTheme {
-        SaveNoteScreen(navController = rememberNavController())
+        SaveNoteScreen(
+            navController = rememberNavController()
+        )
     }
 }
