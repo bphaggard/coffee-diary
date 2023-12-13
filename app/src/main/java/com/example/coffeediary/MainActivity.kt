@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.coffeediary.bottomBar.NavGraph
+import com.example.coffeediary.navigation.NavGraph
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 
 class MainActivity : ComponentActivity() {

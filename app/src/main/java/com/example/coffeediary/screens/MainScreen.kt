@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.R
-import com.example.coffeediary.bottomBar.Screen
+import com.example.coffeediary.navigation.Screen
 import com.example.coffeediary.bounceClick
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
