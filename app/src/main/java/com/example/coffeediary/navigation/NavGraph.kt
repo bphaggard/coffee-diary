@@ -35,7 +35,7 @@ fun NavGraph(
         composable(
             route = Screen.Notes.route
         ){
-            NotesScreen()
+            NotesScreen(navController)
         }
     }
 }
