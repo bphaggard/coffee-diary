@@ -37,7 +37,7 @@ fun CustomBottomNavigation(navController : NavController){
     ) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
-                selected = selectedItemIndex == index,
+                selected = currentDestination?.hierarchy?.any { selectedItemIndex == index } == true,
                 onClick = {
                     selectedItemIndex = index
                     navController.navigate(item.route)

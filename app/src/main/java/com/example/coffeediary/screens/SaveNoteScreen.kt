@@ -38,13 +38,13 @@ import com.example.coffeediary.ui.theme.bebasNeueFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SaveNoteScreen(navController : NavController) {
+fun SaveNoteScreen(navController : NavController, title: String) {
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Coffee Type")
+                    Text(text = title)
                 },
                 navigationIcon = {
                     IconButton(onClick = {navController.popBackStack()}) {
@@ -85,7 +85,8 @@ fun SaveNoteScreen(navController : NavController) {
 fun SavePreview(){
     CoffeeDiaryTheme {
         SaveNoteScreen(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            title = "Coffee"
         )
     }
 }

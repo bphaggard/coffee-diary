@@ -10,7 +10,7 @@ import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 
 class MainActivity : ComponentActivity() {
 
-    lateinit var navController: NavHostController
+    private lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)

@@ -10,9 +10,8 @@ import com.example.coffeediary.screens.NotesScreen
 import com.example.coffeediary.screens.SaveNoteScreen
 
 @Composable
-fun NavGraph(
-    navController: NavHostController
-){
+fun NavGraph(navController : NavHostController){
+
     NavHost(
         navController = navController,
         startDestination = Screen.Main.route
@@ -28,9 +27,10 @@ fun NavGraph(
             MenuScreen(navController)
         }
         composable(
-            route = Screen.SaveNote.route
-        ){
-            SaveNoteScreen(navController)
+            "${Screen.SaveNote.route}/{title}"
+        ) { navBackStackEntry ->
+            val title = navBackStackEntry.arguments?.getString("title")
+            SaveNoteScreen(navController, title ?: "")
         }
         composable(
             route = Screen.Notes.route

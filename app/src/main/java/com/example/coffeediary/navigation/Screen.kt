@@ -19,27 +19,27 @@ sealed class Screen(
     var selectedIcon: ImageVector,
     var unselectedIcon: ImageVector
 ){
-    object Main: Screen(
+    data object Main: Screen(
         title = "Main",
         route = "main_screen",
         selectedIcon = Icons.Filled.Menu,
         unselectedIcon = Icons.Outlined.Menu)
-    object Menu: Screen(
+    data object Menu: Screen(
         title = "Menu",
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         route = "menu_screen")
-    object Notes: Screen(
+    data object Notes: Screen(
         title = "Notes",
         selectedIcon = Icons.Filled.TextSnippet,
         unselectedIcon = Icons.Outlined.TextSnippet,
         route = "notes_screen")
-    object SaveNote: Screen(
+    data object SaveNote: Screen(
         title = "Save",
         selectedIcon = Icons.Filled.Save,
         unselectedIcon = Icons.Outlined.Save,
-        route = "save_screen")
-    object DetailNote: Screen(
+        route = "save_screen/{title}")
+    data object DetailNote: Screen(
         title = "Detail",
         selectedIcon = Icons.Filled.Details,
         unselectedIcon = Icons.Outlined.Details,
