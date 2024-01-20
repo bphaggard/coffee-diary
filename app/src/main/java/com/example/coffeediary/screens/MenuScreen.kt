@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.coffeediary.navigation.CustomBottomNavigation
 import com.example.coffeediary.parts.CoffeeCard
 import com.example.coffeediary.parts.coffeeItems
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
@@ -52,9 +51,6 @@ fun MenuScreen(navController : NavController) {
                         navController = navController)
                 }
             }
-        },
-        bottomBar = {
-            CustomBottomNavigation(navController = navController)
         }
     )
 }
