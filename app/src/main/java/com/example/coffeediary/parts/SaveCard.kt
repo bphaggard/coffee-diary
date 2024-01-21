@@ -1,5 +1,7 @@
 package com.example.coffeediary.parts
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,13 +11,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,13 +33,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
-@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SaveCard(
     navController : NavController
 ){
     var text by remember { mutableStateOf(TextFieldValue("")) }
-    val rating = remember { mutableStateOf(0) }
+    val rating = remember { mutableIntStateOf(0) }
 
     Card(
         modifier = Modifier
@@ -57,37 +59,30 @@ fun SaveCard(
                 label = { Text(text = "Title") },
                 placeholder = { Text(text = "Input title") },
                 onValueChange = { text = it },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Black,
-                    focusedBorderColor = Color.Black,
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.Black))
-            OutlinedTextField(
-                value = text,
-                label = { Text(text = "Date") },
-                placeholder = { Text(text = "Input date") },
-                onValueChange = { text = it },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Black,
                     focusedBorderColor = Color.Black,
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black,
+                    unfocusedBorderColor = Color.Black,
                     focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.Black))
+                    unfocusedLabelColor = Color.Black,
+                )
+            )
+            CustomDatePicker()
             OutlinedTextField(
                 value = text,
                 label = { Text(text = "Location") },
                 placeholder = { Text(text = "Input location") },
                 onValueChange = { text = it },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Black,
-                    focusedBorderColor = Color.Black,
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Black,
                     focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.Black))
+                    unfocusedLabelColor = Color.Black,
+                )
+            )
             OutlinedTextField(
                 modifier = Modifier.height(150.dp),
                 value = text,
@@ -96,13 +91,15 @@ fun SaveCard(
                 onValueChange = { text = it },
                 minLines = 2,
                 maxLines = 6,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Black,
-                    focusedBorderColor = Color.Black,
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Black,
                     focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.Black))
+                    unfocusedLabelColor = Color.Black,
+                )
+            )
             Spacer(modifier = Modifier.padding(5.dp))
             Row {
                 Text(
@@ -111,14 +108,15 @@ fun SaveCard(
                     fontSize = 24.sp)
                 Spacer(modifier = Modifier.padding(5.dp))
                 RatingBar(
-                    currentRating = rating.value,
-                    onRatingChanged = { newRating -> rating.value = newRating }
+                    currentRating = rating.intValue,
+                    onRatingChanged = { newRating -> rating.intValue = newRating }
                 )
             }
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun SavePreview(){
