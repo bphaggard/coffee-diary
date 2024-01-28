@@ -33,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SaveCard(
     navController : NavController
@@ -116,7 +115,6 @@ fun SaveCard(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun SavePreview(){

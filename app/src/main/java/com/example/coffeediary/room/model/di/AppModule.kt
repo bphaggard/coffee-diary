@@ -1,5 +1,6 @@
 package com.example.coffeediary.room.model.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.coffeediary.room.model.data.local.CoffeeDao
@@ -13,24 +14,49 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn (SingletonComponent::class)
-object AppModule {
+@InstallIn(SingletonComponent::class)
+class AppModule {
 
-    @Provides
     @Singleton
-    fun provideLocalDatabase(@ApplicationContext context : Context): CoffeeDatabase {
-        return Room.databaseBuilder(
-            context,
-            CoffeeDatabase::class.java,
-            "local_db"
-        ).build()
+    @Provides
+    fun provideCoffeeRepository(
+        coffeeDao : CoffeeDao
+    ): CoffeeRepository {
+        return CoffeeRepository(dao = coffeeDao)
     }
 
-    @Provides
     @Singleton
-    fun provideCoffeeDao(db: CoffeeDatabase): CoffeeDao = db.coffeeDao()
+    @Provides
+    fun provideCoffeeDatabase(app: Application): CoffeeDatabase {
+        return CoffeeDatabase.getInstance(context = app)
+    }
 
-    @Provides
     @Singleton
-    fun provideCoffeeRepository(dao : CoffeeDao): CoffeeRepository = CoffeeRepository(dao = dao)
+    @Provides
+    fun provideCoffeeDao(appDatabase: CoffeeDatabase): CoffeeDao {
+        return appDatabase.coffeeDao()
+    }
 }
+
+//@Module
+//@InstallIn (SingletonComponent::class)
+//object AppModule {
+//
+//    @Provides
+//    @Singleton
+//    fun provideLocalDatabase(@ApplicationContext context : Context): CoffeeDatabase {
+//        return Room.databaseBuilder(
+//            context,
+//            CoffeeDatabase::class.java,
+//            "local_db"
+//        ).build()
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideCoffeeDao(db: CoffeeDatabase): CoffeeDao = db.coffeeDao()
+//
+//    @Provides
+//    @Singleton
+//    fun provideCoffeeRepository(dao : CoffeeDao): CoffeeRepository = CoffeeRepository(dao = dao)
+//}
