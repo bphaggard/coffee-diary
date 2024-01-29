@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.coffeediary.parts.Converters
 import com.example.coffeediary.room.model.Coffees
 
 @Database(entities = [Coffees::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class CoffeeDatabase : RoomDatabase() {
 
     abstract fun coffeeDao(): CoffeeDao

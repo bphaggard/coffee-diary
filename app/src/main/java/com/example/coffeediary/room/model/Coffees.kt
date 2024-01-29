@@ -2,7 +2,7 @@ package com.example.coffeediary.room.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity(tableName = "coffees")
 data class Coffees(
@@ -11,5 +11,5 @@ data class Coffees(
     val title: String,
     val location: String,
     val description: String,
-    val date: String
+    val date: LocalDateTime
 )

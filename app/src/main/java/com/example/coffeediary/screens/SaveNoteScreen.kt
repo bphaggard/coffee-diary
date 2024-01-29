@@ -30,7 +30,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.bounceClick
 import com.example.coffeediary.navigation.Screen
@@ -38,7 +40,6 @@ import com.example.coffeediary.parts.SaveCard
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
-@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -51,7 +52,13 @@ fun SaveNoteScreen(navController : NavController, title: String) {
                     Text(text = title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = {navController.popBackStack()}) {
+                    IconButton(
+                        onClick = {
+                        if (navController.canGoBack) {
+                            navController.popBackStack()
+                        }
+                    })
+                    {
                         Icon(Icons.Filled.ArrowBack, "backIcon")
                     }
                 },
@@ -84,7 +91,9 @@ fun SaveNoteScreen(navController : NavController, title: String) {
     })
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+val NavController.canGoBack: Boolean // pokud vícekrát klikneme na back button, vráti nás to jen o jeden klik
+    get() = this.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED
+
 @Preview
 @Composable
 fun SavePreview(){

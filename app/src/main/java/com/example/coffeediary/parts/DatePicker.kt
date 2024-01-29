@@ -1,7 +1,5 @@
 package com.example.coffeediary.parts
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -23,7 +21,6 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CustomDatePicker() {
     val date = remember { mutableStateOf(LocalDate.now())}
