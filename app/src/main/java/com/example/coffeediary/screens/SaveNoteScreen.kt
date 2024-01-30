@@ -1,8 +1,6 @@
 package com.example.coffeediary.screens
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.bounceClick
 import com.example.coffeediary.navigation.Screen
@@ -77,7 +74,8 @@ fun SaveNoteScreen(navController : NavController, title: String) {
             Spacer(modifier = Modifier.padding(15.dp))
             Button(
                 modifier = Modifier.bounceClick(),
-                onClick = { navController.navigate(Screen.Notes.route) },
+                onClick = {
+                    navController.navigate(Screen.Notes.route) },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
             ) {

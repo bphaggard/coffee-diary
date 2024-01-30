@@ -11,5 +11,5 @@ data class Coffees(
     val title: String,
     val location: String,
     val description: String,
-    val date: LocalDateTime
+    val date: LocalDateTime = LocalDateTime.now()
 )

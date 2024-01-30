@@ -1,7 +1,5 @@
 package com.example.coffeediary.parts
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -53,20 +51,25 @@ fun SaveCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.padding(top = 20.dp))
-            OutlinedTextField(
-                value = text,
-                label = { Text(text = "Title") },
-                placeholder = { Text(text = "Input title") },
-                onValueChange = { text = it },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black,
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Black,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.Black,
-                )
-            )
+            var enteredValue by remember { mutableStateOf("") }
+            TitleValue(text = enteredValue) { value -> enteredValue = value}
+//            OutlinedTextField(
+//                value = titleText,
+//                label = { Text(text = "Title") },
+//                placeholder = { Text(text = "Input title") },
+//                onValueChange = { newTitleValue ->
+//                                titleText = newTitleValue
+//                    onValueChange(newTitleValue)
+//                },
+//                colors = OutlinedTextFieldDefaults.colors(
+//                    focusedTextColor = Color.Black,
+//                    unfocusedTextColor = Color.Black,
+//                    focusedBorderColor = Color.Black,
+//                    unfocusedBorderColor = Color.Black,
+//                    focusedLabelColor = Color.Black,
+//                    unfocusedLabelColor = Color.Black,
+//                )
+//            )
             CustomDatePicker()
             OutlinedTextField(
                 value = text,
@@ -113,6 +116,30 @@ fun SaveCard(
             }
         }
     }
+}
+
+@Composable
+fun TitleValue(text: String, onValueChange: (String) -> Unit) {
+    var titleValue by remember { mutableStateOf(text) }
+
+    OutlinedTextField(
+        value = titleValue,
+        label = { Text(text = "Title") },
+        placeholder = { Text(text = "Input title") },
+        onValueChange = { newTitleValue ->
+            titleValue = newTitleValue
+            onValueChange(newTitleValue)
+        },
+        singleLine = true,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black,
+            focusedBorderColor = Color.Black,
+            unfocusedBorderColor = Color.Black,
+            focusedLabelColor = Color.Black,
+            unfocusedLabelColor = Color.Black,
+        )
+    )
 }
 
 @Preview
