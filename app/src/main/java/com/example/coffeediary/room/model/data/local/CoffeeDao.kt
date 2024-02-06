@@ -12,18 +12,21 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CoffeeDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCoffeeType(coffees : Coffees)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update
     suspend fun updateCoffeeType(coffees : Coffees)
 
     @Delete
     suspend fun deleteCoffeeType(coffees : Coffees)
 
     @Query("SELECT * FROM Coffees WHERE id = :id")
-    suspend fun getCoffeeTypeById(id: Int): Coffees
+    fun getCoffeeTypeById(id: Int): Flow<Coffees>
 
-    @Query("SELECT * FROM Coffees")
+    @Query("SELECT * FROM Coffees ORDER BY TITLE")
     fun getAllCoffeeType(): Flow<List<Coffees>>
+
+    @Query("DELETE FROM Coffees WHERE id = :id")
+    suspend fun deleteCoffeeById(id : Int)
 }

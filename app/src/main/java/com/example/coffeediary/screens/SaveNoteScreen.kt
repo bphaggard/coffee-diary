@@ -1,6 +1,7 @@
 package com.example.coffeediary.screens
 
 import android.annotation.SuppressLint
+import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -22,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,18 +31,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.bounceClick
 import com.example.coffeediary.navigation.Screen
 import com.example.coffeediary.parts.SaveCard
+import com.example.coffeediary.room.model.Coffees
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SaveNoteScreen(navController : NavController, title: String) {
+fun SaveNoteScreen(
+    navController : NavController,
+    title: String,
+    viewModel: CoffeeViewModel
+) {
+
+    val inputTitle = viewModel.inputTitle.collectAsState()
 
     Scaffold(
         topBar = {
@@ -56,7 +66,7 @@ fun SaveNoteScreen(navController : NavController, title: String) {
                         }
                     })
                     {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "backIcon")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(Color.Transparent)
@@ -70,11 +80,18 @@ fun SaveNoteScreen(navController : NavController, title: String) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            SaveCard(navController)
+            SaveCard()
             Spacer(modifier = Modifier.padding(15.dp))
             Button(
                 modifier = Modifier.bounceClick(),
                 onClick = {
+                    viewModel.insertCoffee(
+                        Coffees(
+                            title = "Costa",
+                            location = "BRNO",
+                            description = "Perfect FlatWhite coffee"
+                        )
+                    )
                     navController.navigate(Screen.Notes.route) },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
@@ -98,7 +115,8 @@ fun SavePreview(){
     CoffeeDiaryTheme {
         SaveNoteScreen(
             navController = rememberNavController(),
-            title = "Coffee"
+            title = "Coffee",
+            viewModel = CoffeeViewModel(appObj = Application())
         )
     }
 }

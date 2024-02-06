@@ -8,26 +8,27 @@ import androidx.room.TypeConverters
 import com.example.coffeediary.parts.Converters
 import com.example.coffeediary.room.model.Coffees
 
-@Database(entities = [Coffees::class], version = 1)
+@Database(entities = [Coffees::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class CoffeeDatabase : RoomDatabase() {
 
     abstract fun coffeeDao(): CoffeeDao
 
     companion object {
+        @Volatile
         private var INSTANCE: CoffeeDatabase? = null
-        fun getInstance(context: Context): CoffeeDatabase {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context, CoffeeDatabase::class.java, "coffee.db")
-                    .fallbackToDestructiveMigration()
-                    .build()
+        fun getDatabase(context: Context): CoffeeDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
             }
-            return INSTANCE as CoffeeDatabase
+            synchronized(this) {
+                val instance = Room.databaseBuilder(context.applicationContext,
+                    CoffeeDatabase::class.java, "coffee_db")
+                    .build()
+                INSTANCE = instance
+                return instance
+            }
         }
     }
 }
-
-//@Database(entities = [Coffees::class], version = 1, exportSchema = true)
-//abstract class CoffeeDatabase: RoomDatabase() {
-//    abstract fun coffeeDao(): CoffeeDao
-//}

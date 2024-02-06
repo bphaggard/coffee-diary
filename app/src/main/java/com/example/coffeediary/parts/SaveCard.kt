@@ -22,20 +22,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
 @Composable
-fun SaveCard(
-    navController : NavController
-){
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+fun SaveCard(){
     val rating = remember { mutableIntStateOf(0) }
 
     Card(
@@ -51,8 +43,8 @@ fun SaveCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.padding(top = 20.dp))
-            var enteredValue by remember { mutableStateOf("") }
-            TitleValue(text = enteredValue) { value -> enteredValue = value}
+            var titleValue by remember { mutableStateOf("") }
+            TitleValue(text = titleValue) { value -> titleValue = value}
 //            OutlinedTextField(
 //                value = titleText,
 //                label = { Text(text = "Title") },
@@ -72,10 +64,10 @@ fun SaveCard(
 //            )
             CustomDatePicker()
             OutlinedTextField(
-                value = text,
+                value = "",
                 label = { Text(text = "Location") },
                 placeholder = { Text(text = "Input location") },
-                onValueChange = { text = it },
+                onValueChange = {  },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
@@ -85,12 +77,13 @@ fun SaveCard(
                     unfocusedLabelColor = Color.Black,
                 )
             )
+            var descriptionValue by remember { mutableStateOf("") }
             OutlinedTextField(
                 modifier = Modifier.height(150.dp),
-                value = text,
+                value = descriptionValue,
                 label = { Text(text = "Description") },
                 placeholder = { Text(text = "Input description") },
-                onValueChange = { text = it },
+                onValueChange = { descriptionValue = it },
                 minLines = 2,
                 maxLines = 6,
                 colors = OutlinedTextFieldDefaults.colors(
@@ -140,12 +133,4 @@ fun TitleValue(text: String, onValueChange: (String) -> Unit) {
             unfocusedLabelColor = Color.Black,
         )
     )
-}
-
-@Preview
-@Composable
-fun SavePreview(){
-    CoffeeDiaryTheme {
-        SaveCard(navController = rememberNavController())
-    }
 }
