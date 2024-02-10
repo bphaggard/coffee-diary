@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.bounceClick
@@ -50,13 +50,15 @@ fun SaveNoteScreen(
     viewModel: CoffeeViewModel
 ) {
 
-    val inputTitle = viewModel.inputTitle.collectAsState()
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = title)
+                    Text(
+                        text = title,
+                        fontFamily = bebasNeueFamily,
+                        fontSize = 30.sp
+                    )
                 },
                 navigationIcon = {
                     IconButton(
@@ -80,16 +82,16 @@ fun SaveNoteScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            SaveCard()
+            SaveCard(viewModel)
             Spacer(modifier = Modifier.padding(15.dp))
             Button(
                 modifier = Modifier.bounceClick(),
                 onClick = {
                     viewModel.insertCoffee(
                         Coffees(
-                            title = "Costa",
-                            location = "BRNO",
-                            description = "Perfect FlatWhite coffee"
+                            title = viewModel.inputTitle.value,
+                            location = viewModel.inputLocation.value,
+                            description = viewModel.inputDescription.value
                         )
                     )
                     navController.navigate(Screen.Notes.route) },

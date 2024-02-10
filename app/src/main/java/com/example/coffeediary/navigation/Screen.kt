@@ -43,5 +43,5 @@ sealed class Screen(
         title = "Detail",
         selectedIcon = Icons.Filled.Details,
         unselectedIcon = Icons.Outlined.Details,
-        route = "detail_screen")
+        route = "detail_screen/{title}")
 }

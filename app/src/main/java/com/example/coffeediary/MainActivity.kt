@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.navigation.Screen
 import com.example.coffeediary.screens.CoffeeViewModel
+import com.example.coffeediary.screens.DetailScreen
 import com.example.coffeediary.screens.MainScreen
 import com.example.coffeediary.screens.MenuScreen
 import com.example.coffeediary.screens.SaveNoteScreen
@@ -52,6 +53,12 @@ class MainActivity : ComponentActivity() {
                         route = Screen.Notes.route
                     ){
                         NotesScreen(viewModel, navController)
+                    }
+                    composable(
+                        route = "${ Screen.DetailNote.route }/{title}"
+                    ){navBackStackEntry ->
+                        val title = navBackStackEntry.arguments?.getString("title")
+                        DetailScreen(navController, title ?: "", viewModel = viewModel)
                     }
                 }
             }

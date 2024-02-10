@@ -52,17 +52,11 @@ fun CoffeeCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            //Spacer(modifier = Modifier.padding(start = 15.dp))
-//            Image(
-//                modifier = Modifier
-//                    .fillMaxHeight(0.8f),
-//                painter = painterResource(id = image),
-//                contentDescription = "coffee type")
             AsyncImage(
                 model = image,
                 modifier = Modifier
                     .size(100.dp),
-                contentDescription = "coffee type")
+                contentDescription = null)
             //Spacer(modifier = Modifier.padding(start = 20.dp))
             Text(
                 modifier = Modifier

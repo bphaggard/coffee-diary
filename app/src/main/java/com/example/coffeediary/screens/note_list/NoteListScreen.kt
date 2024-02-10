@@ -77,11 +77,12 @@ fun NotesScreen(
                 content = {
                     items(
                         items = coffeeList.value,
-                        itemContent = {
+                        itemContent = {coffeeItem ->
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth(0.85f)
-                                    .height(80.dp),
+                                    .height(80.dp)
+                                    .clickable { navController.navigate("${ Screen.DetailNote.route }/${coffeeItem.title}") },
                                 shape = RoundedCornerShape(22.dp),
                                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary),
                                 elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
@@ -98,17 +99,17 @@ fun NotesScreen(
                                         verticalArrangement = Arrangement.Center
                                     ) {
                                         Text(
-                                            text = it.title,
+                                            text = coffeeItem.title,
                                             fontFamily = bebasNeueFamily,
                                             fontSize = 26.sp
                                         )
                                         Text(
-                                            text = it.location,
+                                            text = coffeeItem.location,
                                             fontFamily = bebasNeueFamily,
                                             fontSize = 14.sp
                                         )
                                         Text(
-                                            text = it.date.toString(),
+                                            text = coffeeItem.date.toString(),
                                             fontFamily = bebasNeueFamily,
                                             fontSize = 10.sp
                                         )
@@ -120,7 +121,7 @@ fun NotesScreen(
                                         tint = Color.Black,
                                         modifier = Modifier
                                             .clickable(onClick = {
-                                                viewModel.deleteCoffeeById(it.id)
+                                                viewModel.deleteCoffeeById(coffeeItem.id)
                                         }
                                             )
                                     )

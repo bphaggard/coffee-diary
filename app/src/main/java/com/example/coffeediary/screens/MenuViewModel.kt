@@ -1,6 +1,7 @@
 package com.example.coffeediary.screens
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coffeediary.room.model.Coffees
@@ -49,9 +50,21 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
     }
 
     private val _inputTitle = MutableStateFlow("")
-    val inputTitle = _inputTitle.asStateFlow()
+    val inputTitle = _inputTitle
+    fun setInputTitle(title: String) {
+        _inputTitle.tryEmit(title)
+    }
 
-    fun setTitle(title: String) {
-        _inputTitle.value = title
+    private val _inputLocation = MutableStateFlow("")
+    val inputLocation = _inputLocation.asStateFlow()
+    fun setInputLocation(location: String) {
+        _inputLocation.tryEmit(location)
+    }
+
+    private val _inputDescription = MutableStateFlow("")
+    val inputDescription = _inputDescription.asStateFlow()
+
+    fun setInputDescription(desc: String) {
+        _inputDescription.tryEmit(desc)
     }
 }
