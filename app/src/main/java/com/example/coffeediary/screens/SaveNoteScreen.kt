@@ -23,8 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -82,14 +80,14 @@ fun SaveNoteScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            SaveCard(viewModel)
+            SaveCard(viewModel, title)
             Spacer(modifier = Modifier.padding(15.dp))
             Button(
                 modifier = Modifier.bounceClick(),
                 onClick = {
                     viewModel.insertCoffee(
                         Coffees(
-                            title = viewModel.inputTitle.value,
+                            title = title,
                             location = viewModel.inputLocation.value,
                             description = viewModel.inputDescription.value
                         )

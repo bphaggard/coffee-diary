@@ -1,5 +1,7 @@
 package com.example.coffeediary.parts
 
+import android.app.Application
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,18 +25,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeediary.screens.CoffeeViewModel
+import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
 
 @Composable
-fun SaveCard(coffeeViewModel : CoffeeViewModel){
+fun SaveCard(
+    coffeeViewModel : CoffeeViewModel,
+    title: String
+){
 
-    val inputTitle by coffeeViewModel.inputTitle.collectAsState()
-    val onTitleEntered: (value: String) -> Unit = remember {
-        return@remember coffeeViewModel::setInputTitle
-    }
+//    var textFieldTitleValue by remember { mutableStateOf(title) }
+//
+//    val inputTitle by coffeeViewModel.inputTitle.collectAsState()
+//    val onTitleEntered: (value: String) -> Unit = remember {
+//        return@remember coffeeViewModel::setInputTitle
+//    }
     val inputLocation by coffeeViewModel.inputLocation.collectAsState()
     val onLocationEntered: (value: String) -> Unit = remember {
         return@remember coffeeViewModel::setInputLocation
@@ -46,7 +55,7 @@ fun SaveCard(coffeeViewModel : CoffeeViewModel){
 
     Card(
         modifier = Modifier
-            .height(430.dp)
+            .height(380.dp)
             .fillMaxWidth(0.85f),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
     ) {
@@ -56,21 +65,21 @@ fun SaveCard(coffeeViewModel : CoffeeViewModel){
                 .padding(15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.padding(top = 20.dp))
-            OutlinedTextField(
-                value = inputTitle,
-                label = { Text(text = "Title") },
-                placeholder = { Text(text = "Input title") },
-                onValueChange = { onTitleEntered(it) },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black,
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Black,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.Black,
-                )
-            )
+            Spacer(modifier = Modifier.padding(top = 15.dp))
+//            OutlinedTextField(
+//                value = textFieldTitleValue,
+//                label = { Text(text = "Title") },
+//                placeholder = { Text(text = "Input title") },
+//                onValueChange = { textFieldTitleValue = it },
+//                colors = OutlinedTextFieldDefaults.colors(
+//                    focusedTextColor = Color.Black,
+//                    unfocusedTextColor = Color.Black,
+//                    focusedBorderColor = Color.Black,
+//                    unfocusedBorderColor = Color.Black,
+//                    focusedLabelColor = Color.Black,
+//                    unfocusedLabelColor = Color.Black,
+//                )
+//            )
             CustomDatePicker()
             OutlinedTextField(
                 value = inputLocation,
@@ -86,7 +95,6 @@ fun SaveCard(coffeeViewModel : CoffeeViewModel){
                     unfocusedLabelColor = Color.Black,
                 )
             )
-            //var descriptionValue by remember { mutableStateOf("") }
             OutlinedTextField(
                 modifier = Modifier.height(150.dp),
                 value = inputDescription,
@@ -104,7 +112,7 @@ fun SaveCard(coffeeViewModel : CoffeeViewModel){
                     unfocusedLabelColor = Color.Black,
                 )
             )
-            Spacer(modifier = Modifier.padding(5.dp))
+            Spacer(modifier = Modifier.padding(10.dp))
             Row {
                 Text(
                     text = "rating:",
@@ -118,5 +126,15 @@ fun SaveCard(coffeeViewModel : CoffeeViewModel){
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardPreview(){
+    CoffeeDiaryTheme {
+        SaveCard(
+            coffeeViewModel = CoffeeViewModel(Application()),
+            title = "")
     }
 }
