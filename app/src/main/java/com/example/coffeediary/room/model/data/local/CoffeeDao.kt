@@ -29,4 +29,10 @@ interface CoffeeDao {
 
     @Query("DELETE FROM Coffees WHERE id = :id")
     suspend fun deleteCoffeeById(id : Int)
+
+    @Query("SELECT * FROM Coffees ORDER BY DATE")
+    fun getCoffeeByDate(): Flow<List<Coffees>>
+
+    @Query("SELECT * FROM Coffees ORDER BY LOCATION")
+    fun getCoffeeByLocation(): Flow<List<Coffees>>
 }

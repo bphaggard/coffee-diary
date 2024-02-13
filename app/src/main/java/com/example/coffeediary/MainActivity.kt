@@ -55,10 +55,14 @@ class MainActivity : ComponentActivity() {
                         NotesScreen(viewModel, navController)
                     }
                     composable(
-                        route = "${ Screen.DetailNote.route }/{title}"
+                        route = "${ Screen.DetailNote.route }/{title}/{id}"
                     ){navBackStackEntry ->
                         val title = navBackStackEntry.arguments?.getString("title")
-                        DetailScreen(navController, title ?: "", viewModel = viewModel)
+                        val idString = navBackStackEntry.arguments?.getString("id")
+                        val id = idString?.toIntOrNull()
+                        if (id != null) {
+                            DetailScreen(navController, title ?: "", itemId = id, viewModel = viewModel)
+                        }
                     }
                 }
             }

@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.coffeediary.navigation.Screen
+import com.example.coffeediary.parts.RatingBar
 import com.example.coffeediary.screens.CoffeeViewModel
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
@@ -81,8 +82,8 @@ fun NotesScreen(
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth(0.85f)
-                                    .height(80.dp)
-                                    .clickable { navController.navigate("${ Screen.DetailNote.route }/${coffeeItem.title}") },
+                                    .height(94.dp)
+                                    .clickable { navController.navigate("${Screen.DetailNote.route}/${coffeeItem.title}/${coffeeItem.id}") },
                                 shape = RoundedCornerShape(22.dp),
                                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary),
                                 elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
@@ -95,7 +96,9 @@ fun NotesScreen(
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Column(
-                                        modifier = Modifier. fillMaxHeight(),
+                                        modifier = Modifier
+                                            .fillMaxHeight()
+                                            .padding(vertical = 5.dp),
                                         verticalArrangement = Arrangement.Center
                                     ) {
                                         Text(
@@ -113,6 +116,9 @@ fun NotesScreen(
                                             fontFamily = bebasNeueFamily,
                                             fontSize = 10.sp
                                         )
+                                        RatingBar(
+                                            currentRating = coffeeItem.ratingBar,
+                                            onRatingChanged = {})
                                     }
                                     Spacer(modifier = Modifier.size(10.dp))
                                     Icon(

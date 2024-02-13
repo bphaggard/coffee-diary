@@ -11,5 +11,6 @@ data class Coffees(
     val title: String,
     val location: String,
     val description: String,
-    val date: LocalDate = LocalDate.now()
+    val date: LocalDate = LocalDate.now(),
+    val ratingBar: Int
 )

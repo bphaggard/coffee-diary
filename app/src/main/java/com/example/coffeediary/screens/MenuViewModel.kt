@@ -1,7 +1,6 @@
 package com.example.coffeediary.screens
 
 import android.app.Application
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coffeediary.room.model.Coffees
@@ -19,21 +18,17 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
         return coffeeRepository.readAllCoffees
     }
 
+    fun getCoffeeByDate(): Flow<List<Coffees>> {
+        return coffeeRepository.readCoffeesByDate
+    }
+
+    fun getCoffeeByLocation(): Flow<List<Coffees>> {
+        return coffeeRepository.readCoffeesByLocation
+    }
+
     fun insertCoffee(coffees : Coffees) {
         viewModelScope.launch {
             coffeeRepository.insertCoffeeType(coffees = coffees)
-        }
-    }
-
-    fun updateCoffee(coffees : Coffees) {
-        viewModelScope.launch {
-            coffeeRepository.updateCoffeeType(coffees = coffees)
-        }
-    }
-
-    fun deleteCoffee(coffees : Coffees) {
-        viewModelScope.launch {
-            coffeeRepository.deleteCoffeeType(coffees)
         }
     }
 
@@ -43,16 +38,8 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
         }
     }
 
-    fun getCoffeeById(id : Int) {
-        viewModelScope.launch {
-            coffeeRepository.getCoffeeById(id)
-        }
-    }
-
-    private val _inputTitle = MutableStateFlow("")
-    val inputTitle = _inputTitle
-    fun setInputTitle(title: String) {
-        _inputTitle.tryEmit(title)
+    fun getCoffeeById(id : Int): Flow<Coffees> {
+        return coffeeRepository.getCoffeeById(id)
     }
 
     private val _inputLocation = MutableStateFlow("")
@@ -66,5 +53,12 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
     fun setInputDescription(desc: String) {
         _inputDescription.tryEmit(desc)
+    }
+
+    private val _inputRatingBar = MutableStateFlow(0)
+    val inputRatingBar = _inputRatingBar.asStateFlow()
+
+    fun setInputRatingBar(rating: Int) {
+        _inputRatingBar.tryEmit(rating)
     }
 }

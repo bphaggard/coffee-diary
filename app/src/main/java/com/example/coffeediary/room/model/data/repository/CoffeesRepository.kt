@@ -15,23 +15,19 @@ class CoffeesRepository(application : Application) {
     }
 
     val readAllCoffees: Flow<List<Coffees>> = coffeeDao.getAllCoffeeType()
+
+    val readCoffeesByDate: Flow<List<Coffees>> = coffeeDao.getCoffeeByDate()
+
+    val readCoffeesByLocation: Flow<List<Coffees>> = coffeeDao.getCoffeeByLocation()
     suspend fun insertCoffeeType(coffees : Coffees) {
         coffeeDao.insertCoffeeType(coffees)
-    }
-
-    suspend fun deleteCoffeeType(coffees : Coffees) {
-        coffeeDao.deleteCoffeeType(coffees)
     }
 
     suspend fun deleteCoffeeById(id : Int) {
         coffeeDao.deleteCoffeeById(id)
     }
 
-    suspend fun updateCoffeeType(coffees : Coffees) {
-        coffeeDao.updateCoffeeType(coffees)
-    }
-
-    fun getCoffeeById(id: Int) {
-        coffeeDao.getCoffeeTypeById(id)
+    fun getCoffeeById(id: Int): Flow<Coffees> {
+        return coffeeDao.getCoffeeTypeById(id)
     }
 }

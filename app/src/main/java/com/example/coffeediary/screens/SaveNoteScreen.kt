@@ -80,7 +80,7 @@ fun SaveNoteScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            SaveCard(viewModel, title)
+            SaveCard(viewModel)
             Spacer(modifier = Modifier.padding(15.dp))
             Button(
                 modifier = Modifier.bounceClick(),
@@ -89,7 +89,8 @@ fun SaveNoteScreen(
                         Coffees(
                             title = title,
                             location = viewModel.inputLocation.value,
-                            description = viewModel.inputDescription.value
+                            description = viewModel.inputDescription.value,
+                            ratingBar = viewModel.inputRatingBar.value
                         )
                     )
                     navController.navigate(Screen.Notes.route) },

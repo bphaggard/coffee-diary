@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.coffeediary.R
+import com.example.coffeediary.parts.RatingBar
 import com.example.coffeediary.parts.titleToImageMap
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
@@ -48,10 +49,11 @@ import com.example.coffeediary.ui.theme.oswaldFamily
 fun DetailScreen(
     navController : NavController,
     title: String,
+    itemId: Int,
     viewModel : CoffeeViewModel
 
 ) {
-    val coffeeList = viewModel.getAllCoffeeType().collectAsState(initial = emptyList())
+    val coffeeId = viewModel.getCoffeeById(itemId).collectAsState(initial = null).value
 
     Scaffold(
         topBar = {
@@ -107,10 +109,8 @@ fun DetailScreen(
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.Top,
                     content = {
-                        val filteredCoffeeList = coffeeList.value.filter { it.title == title }
-
                         items(
-                            items = filteredCoffeeList,
+                            items = listOfNotNull(coffeeId),
                             itemContent = {coffeeItem ->
                                 Column(
                                     modifier = Modifier
@@ -132,6 +132,18 @@ fun DetailScreen(
                                             fontFamily = oswaldFamily,
                                             fontWeight = FontWeight.Light,
                                             fontSize = 16.sp
+                                        )
+                                    }
+                                    Row {
+                                        Text(
+                                            text = "rating:",
+                                            fontFamily = oswaldFamily,
+                                            fontWeight = FontWeight.Light,
+                                            fontSize = 16.sp)
+                                        Spacer(modifier = Modifier.padding(5.dp))
+                                        RatingBar(
+                                            currentRating = coffeeItem.ratingBar,
+                                            onRatingChanged = {  }
                                         )
                                     }
                                     Spacer(modifier = Modifier.padding(5.dp))
@@ -158,6 +170,7 @@ fun DetailPreview(){
         DetailScreen(
             navController = rememberNavController(),
             title = "Detail note",
+            itemId = 1,
             viewModel = CoffeeViewModel(Application())
         )
     }

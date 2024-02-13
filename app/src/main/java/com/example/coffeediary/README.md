@@ -12,3 +12,4 @@ Design made in Figma:
 ![287360020-218f257e-e555-4b69-9b1c-e9c538c8e60b.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2F287360020-218f257e-e555-4b69-9b1c-e9c538c8e60b.png)
 
 Real app design:
+![real_app.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2Freal_app.png)
