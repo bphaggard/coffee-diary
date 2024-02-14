@@ -13,7 +13,7 @@ import com.example.coffeediary.screens.DetailScreen
 import com.example.coffeediary.screens.MainScreen
 import com.example.coffeediary.screens.MenuScreen
 import com.example.coffeediary.screens.SaveNoteScreen
-import com.example.coffeediary.screens.note_list.NotesScreen
+import com.example.coffeediary.screens.NotesScreen
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import dagger.hilt.android.AndroidEntryPoint
 

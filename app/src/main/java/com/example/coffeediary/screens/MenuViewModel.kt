@@ -7,12 +7,30 @@ import com.example.coffeediary.room.model.Coffees
 import com.example.coffeediary.room.model.data.repository.CoffeesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
     private val coffeeRepository: CoffeesRepository = CoffeesRepository(appObj)
+
+    // StateFlow for sort order
+    private val _sortOrder = MutableStateFlow("None")
+    val sortOrder: StateFlow<String> get() = _sortOrder
+
+    // Functions to change sort order
+    fun sortByTitle() {
+        _sortOrder.value = "Title"
+    }
+
+    fun sortByDate() {
+        _sortOrder.value = "Date"
+    }
+
+    fun sortByRating() {
+        _sortOrder.value = "Rating"
+    }
 
     fun getAllCoffeeType(): Flow<List<Coffees>> {
         return coffeeRepository.readAllCoffees
