@@ -2,6 +2,8 @@ package com.example.coffeediary.parts
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -16,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -33,7 +36,10 @@ fun CustomDatePicker() {
             value = date.value.format(DateTimeFormatter.ISO_DATE),
             label = { Text("Date") },
             onValueChange = {},
-            modifier = Modifier.clickable(onClick = { isOpen.value = true }),
+            modifier = Modifier
+                .clickable(onClick = { isOpen.value = true })
+                .height(66.dp)
+                .fillMaxWidth(0.9f),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,

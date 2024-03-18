@@ -41,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -107,7 +108,10 @@ fun NotesScreen(
                                     fontFamily = oswaldFamily,
                                     fontWeight = FontWeight.Normal
                                 ) },
-                            onClick = { viewModel.sortByTitle() }
+                            onClick = {
+                                viewModel.sortByTitle()
+                                menuExpanded = false
+                            }
                         )
                         DropdownMenuItem(
                             text = {
@@ -116,7 +120,10 @@ fun NotesScreen(
                                     fontFamily = oswaldFamily,
                                     fontWeight = FontWeight.Normal
                                 ) },
-                            onClick = { viewModel.sortByDate() }
+                            onClick = {
+                                viewModel.sortByDate()
+                                menuExpanded = false
+                            }
                         )
                         DropdownMenuItem(
                             text = {
@@ -125,7 +132,10 @@ fun NotesScreen(
                                     fontFamily = oswaldFamily,
                                     fontWeight = FontWeight.Normal
                                 ) },
-                            onClick = { viewModel.sortByRating() }
+                            onClick = {
+                                viewModel.sortByRating()
+                                menuExpanded = false
+                            }
                         )
                     }
                 }
@@ -144,7 +154,7 @@ fun NotesScreen(
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth(0.85f)
-                                    .height(94.dp)
+                                    .height(100.dp)
                                     .clickable { navController.navigate("${Screen.DetailNote.route}/${coffeeItem.title}/${coffeeItem.id}") },
                                 shape = RoundedCornerShape(22.dp),
                                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary),
@@ -160,6 +170,7 @@ fun NotesScreen(
                                     Column(
                                         modifier = Modifier
                                             .fillMaxHeight()
+                                            .fillMaxWidth(0.85f)
                                             .padding(vertical = 5.dp),
                                         verticalArrangement = Arrangement.Center
                                     ) {
@@ -171,6 +182,8 @@ fun NotesScreen(
                                         Text(
                                             text = coffeeItem.location,
                                             fontFamily = bebasNeueFamily,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
                                             fontSize = 14.sp
                                         )
                                         Text(

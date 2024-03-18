@@ -79,4 +79,10 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
     fun setInputRatingBar(rating: Int) {
         _inputRatingBar.tryEmit(rating)
     }
+
+    fun clearAllInputs() {
+        _inputLocation.tryEmit("")
+        _inputDescription.tryEmit("")
+        _inputRatingBar.tryEmit(0)
+    }
 }

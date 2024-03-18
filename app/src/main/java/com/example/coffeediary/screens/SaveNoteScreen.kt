@@ -93,7 +93,9 @@ fun SaveNoteScreen(
                             ratingBar = viewModel.inputRatingBar.value
                         )
                     )
-                    navController.navigate(Screen.Notes.route) },
+                    navController.navigate(Screen.Notes.route)
+                    viewModel.clearAllInputs()
+                          },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
             ) {

@@ -61,6 +61,10 @@ fun SaveCard(
             Spacer(modifier = Modifier.padding(top = 15.dp))
             CustomDatePicker()
             OutlinedTextField(
+                modifier = Modifier
+                    .height(66.dp)
+                    .fillMaxWidth(0.9f),
+                maxLines = 1,
                 value = inputLocation,
                 label = { Text(text = "Location") },
                 placeholder = { Text(text = "Input location") },
@@ -75,7 +79,9 @@ fun SaveCard(
                 )
             )
             OutlinedTextField(
-                modifier = Modifier.height(150.dp),
+                modifier = Modifier
+                    .height(150.dp)
+                    .fillMaxWidth(0.9f),
                 value = inputDescription,
                 label = { Text(text = "Description") },
                 placeholder = { Text(text = "Input description") },
