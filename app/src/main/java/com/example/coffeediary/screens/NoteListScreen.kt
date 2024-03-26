@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
@@ -196,16 +197,34 @@ fun NotesScreen(
                                             onRatingChanged = {})
                                     }
                                     Spacer(modifier = Modifier.size(10.dp))
-                                    Icon(
-                                        imageVector = Icons.Filled.Delete,
-                                        contentDescription = "delete",
-                                        tint = Color.Black,
+                                    Column(
                                         modifier = Modifier
-                                            .clickable(onClick = {
-                                                viewModel.deleteCoffeeById(coffeeItem.id)
-                                        }
+                                            .fillMaxHeight()
+                                            .fillMaxWidth(0.85f)
+                                            .padding(vertical = 15.dp),
+                                        verticalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Edit,
+                                            contentDescription = "edit",
+                                            tint = Color.Black,
+                                            modifier = Modifier
+                                                .clickable(onClick = {
+                                                    navController.navigate("${ Screen.UpdateNote.route }/${coffeeItem.id}")
+                                                }
                                             )
-                                    )
+                                        )
+                                        Icon(
+                                            imageVector = Icons.Filled.Delete,
+                                            contentDescription = "delete",
+                                            tint = Color.Black,
+                                            modifier = Modifier
+                                                .clickable(onClick = {
+                                                    viewModel.deleteCoffeeById(coffeeItem.id)
+                                                }
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         }

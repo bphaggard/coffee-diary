@@ -78,7 +78,7 @@ fun SaveNoteScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             SaveCard(viewModel)
             Spacer(modifier = Modifier.padding(15.dp))
@@ -109,7 +109,7 @@ fun SaveNoteScreen(
     })
 }
 
-val NavController.canGoBack: Boolean // pokud vícekrát klikneme na back button, vráti nás to jen o jeden klik
+private val NavController.canGoBack: Boolean // pokud vícekrát klikneme na back button, vráti nás to jen o jeden klik
     get() = this.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED
 
 @Preview

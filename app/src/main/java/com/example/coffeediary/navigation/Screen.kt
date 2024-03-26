@@ -16,6 +16,10 @@ sealed class Screen(
     data object SaveNote: Screen(
         title = "Save",
         route = "save_screen/{title}")
+    data object UpdateNote: Screen(
+        title = "Update",
+        route = "save_screen"
+    )
     data object DetailNote: Screen(
         title = "Detail",
         route = "detail_screen/{title}")

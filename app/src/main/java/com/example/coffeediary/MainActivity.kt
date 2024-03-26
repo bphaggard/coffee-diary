@@ -14,6 +14,7 @@ import com.example.coffeediary.screens.MainScreen
 import com.example.coffeediary.screens.MenuScreen
 import com.example.coffeediary.screens.SaveNoteScreen
 import com.example.coffeediary.screens.NotesScreen
+import com.example.coffeediary.screens.UpdateScreen
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,6 +49,15 @@ class MainActivity : ComponentActivity() {
                     ) { navBackStackEntry ->
                         val title = navBackStackEntry.arguments?.getString("title")
                         SaveNoteScreen(navController, title ?: "", viewModel)
+                    }
+                    composable(
+                        route = "${ Screen.UpdateNote.route }/{id}"
+                    ){navBackStackEntry ->
+                        val idString = navBackStackEntry.arguments?.getString("id")
+                        val id = idString?.toIntOrNull()
+                        if (id != null) {
+                            UpdateScreen(navController, id,viewModel)
+                        }
                     }
                     composable(
                         route = Screen.Notes.route

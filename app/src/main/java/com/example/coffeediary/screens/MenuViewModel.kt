@@ -2,6 +2,8 @@ package com.example.coffeediary.screens
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.coffeediary.room.model.Coffees
 import com.example.coffeediary.room.model.data.repository.CoffeesRepository
@@ -10,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
@@ -36,17 +39,15 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
         return coffeeRepository.readAllCoffees
     }
 
-    fun getCoffeeByDate(): Flow<List<Coffees>> {
-        return coffeeRepository.readCoffeesByDate
-    }
-
-    fun getCoffeeByLocation(): Flow<List<Coffees>> {
-        return coffeeRepository.readCoffeesByLocation
-    }
-
     fun insertCoffee(coffees : Coffees) {
         viewModelScope.launch {
             coffeeRepository.insertCoffeeType(coffees = coffees)
+        }
+    }
+
+    fun updateCoffee(id: Int, newLocation: String, newDescription: String, newRating: Int) {
+        viewModelScope.launch {
+            coffeeRepository.updateCoffee(id, newLocation, newDescription, newRating)
         }
     }
 

@@ -20,21 +20,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun CustomDatePicker() {
-    val date = remember { mutableStateOf(LocalDate.now())}
+    val date = remember { mutableStateOf("")}
     val isOpen = remember { mutableStateOf(false)}
 
     Row(verticalAlignment = Alignment.CenterVertically) {
 
         OutlinedTextField(
             readOnly = true,
-            value = date.value.format(DateTimeFormatter.ISO_DATE),
+            value = date.value,
             label = { Text("Date") },
+            placeholder = { Text(text = "Input date") },
             onValueChange = {},
             modifier = Modifier
                 .clickable(onClick = { isOpen.value = true })
@@ -56,11 +55,11 @@ fun CustomDatePicker() {
             onAccept = {
                 isOpen.value = false // close dialog
 
-                if (it != null) { // Set the date
+                if (it != null) {// Set the date
                     date.value = Instant
                         .ofEpochMilli(it)
-                        .atZone(ZoneId.of("UTC"))
-                        .toLocalDate()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate().toString()
                 }
             },
             onCancel = {
