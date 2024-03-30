@@ -22,74 +22,73 @@ import androidx.compose.ui.unit.dp
 import java.time.Instant
 import java.time.ZoneId
 
-@Composable
-fun CustomDatePicker() {
-    val date = remember { mutableStateOf("")}
-    val isOpen = remember { mutableStateOf(false)}
-
-    Row(verticalAlignment = Alignment.CenterVertically) {
-
-        OutlinedTextField(
-            readOnly = true,
-            value = date.value,
-            label = { Text("Date") },
-            placeholder = { Text(text = "Input date") },
-            onValueChange = {},
-            modifier = Modifier
-                .clickable(onClick = { isOpen.value = true })
-                .height(66.dp)
-                .fillMaxWidth(0.9f),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedTextColor = Color.Black,
-                unfocusedTextColor = Color.Black,
-                focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black,
-                focusedLabelColor = Color.Black,
-                unfocusedLabelColor = Color.Black,
-            )
-        )
-    }
-
-    if (isOpen.value) {
-        CustomDatePickerDialog(
-            onAccept = {
-                isOpen.value = false // close dialog
-
-                if (it != null) {// Set the date
-                    date.value = Instant
-                        .ofEpochMilli(it)
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate().toString()
-                }
-            },
-            onCancel = {
-                isOpen.value = false //close dialog
-            }
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CustomDatePickerDialog(
-    onAccept: (Long?) -> Unit,
-    onCancel: () -> Unit
-) {
-    val state = rememberDatePickerState()
-
-    DatePickerDialog(
-        onDismissRequest = { },
-        confirmButton = {
-            Button(onClick = { onAccept(state.selectedDateMillis) }) {
-                Text("Accept")
-            }
-        },
-        dismissButton = {
-            Button(onClick = onCancel) {
-                Text("Cancel")
-            }
-        }
-    ) {
-        DatePicker(state = state)
-    }
-}
+//@Composable
+//fun CustomDatePicker() {
+//    val date = remember { mutableStateOf("")}
+//    val isOpen = remember { mutableStateOf(false)}
+//
+//    Row(verticalAlignment = Alignment.CenterVertically) {
+//        OutlinedTextField(
+//            readOnly = true,
+//            value = date.value,
+//            label = { Text("Date") },
+//            placeholder = { Text(text = "Input date") },
+//            onValueChange = {},
+//            modifier = Modifier
+//                .clickable(onClick = { isOpen.value = true })
+//                .height(66.dp)
+//                .fillMaxWidth(0.9f),
+//            colors = OutlinedTextFieldDefaults.colors(
+//                focusedTextColor = Color.Black,
+//                unfocusedTextColor = Color.Black,
+//                focusedBorderColor = Color.Black,
+//                unfocusedBorderColor = Color.Black,
+//                focusedLabelColor = Color.Black,
+//                unfocusedLabelColor = Color.Black,
+//            )
+//        )
+//    }
+//
+//    if (isOpen.value) {
+//        CustomDatePickerDialog(
+//            onAccept = {
+//                isOpen.value = false // close dialog
+//
+//                if (it != null) {// Set the date
+//                    date.value = Instant
+//                        .ofEpochMilli(it)
+//                        .atZone(ZoneId.systemDefault())
+//                        .toLocalDate().toString()
+//                }
+//            },
+//            onCancel = {
+//                isOpen.value = false //close dialog
+//            }
+//        )
+//    }
+//}
+//
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun CustomDatePickerDialog(
+//    onAccept: (Long?) -> Unit,
+//    onCancel: () -> Unit
+//) {
+//    val state = rememberDatePickerState()
+//
+//    DatePickerDialog(
+//        onDismissRequest = { },
+//        confirmButton = {
+//            Button(onClick = { onAccept(state.selectedDateMillis) }) {
+//                Text("Accept")
+//            }
+//        },
+//        dismissButton = {
+//            Button(onClick = onCancel) {
+//                Text("Cancel")
+//            }
+//        }
+//    ) {
+//        DatePicker(state = state)
+//    }
+//}

@@ -1,9 +1,8 @@
 package com.example.coffeediary.screens
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.coffeediary.room.model.Coffees
 import com.example.coffeediary.room.model.data.repository.CoffeesRepository
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
@@ -59,6 +57,14 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
     fun getCoffeeById(id : Int): Flow<Coffees> {
         return coffeeRepository.getCoffeeById(id)
+    }
+
+    private val _dateResult = MutableStateFlow("Select")
+    val dateResult = _dateResult.asStateFlow()
+
+    fun setDateResult(date: String) {
+        _dateResult.tryEmit(date)
+        Log.d("CoffeeViewModel", "DateResult has been set to: $date")
     }
 
     private val _inputLocation = MutableStateFlow("")

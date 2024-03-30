@@ -32,7 +32,6 @@ import com.example.coffeediary.ui.theme.bebasNeueFamily
 fun SaveCard(
     coffeeViewModel : CoffeeViewModel
 ){
-
     val inputLocation by coffeeViewModel.inputLocation.collectAsState()
     val onLocationEntered: (value: String) -> Unit = remember {
         return@remember coffeeViewModel::setInputLocation
@@ -59,7 +58,7 @@ fun SaveCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.padding(top = 15.dp))
-            CustomDatePicker()
+            DatePickerDemo(coffeeViewModel)
             OutlinedTextField(
                 modifier = Modifier
                     .height(66.dp)

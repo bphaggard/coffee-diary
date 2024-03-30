@@ -47,7 +47,6 @@ fun SaveNoteScreen(
     title: String,
     viewModel: CoffeeViewModel
 ) {
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -90,6 +89,7 @@ fun SaveNoteScreen(
                             title = title,
                             location = viewModel.inputLocation.value,
                             description = viewModel.inputDescription.value,
+                            date = viewModel.dateResult.value,
                             ratingBar = viewModel.inputRatingBar.value
                         )
                     )
