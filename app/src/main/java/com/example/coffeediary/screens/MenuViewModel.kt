@@ -43,9 +43,9 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
         }
     }
 
-    fun updateCoffee(id: Int, newLocation: String, newDescription: String, newRating: Int) {
+    fun updateCoffee(id: Int, newDate: String, newLocation: String, newDescription: String, newRating: Int) {
         viewModelScope.launch {
-            coffeeRepository.updateCoffee(id, newLocation, newDescription, newRating)
+            coffeeRepository.updateCoffee(id, newDate ,newLocation, newDescription, newRating)
         }
     }
 

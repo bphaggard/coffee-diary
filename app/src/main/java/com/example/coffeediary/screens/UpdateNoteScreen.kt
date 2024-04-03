@@ -3,6 +3,7 @@ package com.example.coffeediary.screens
 import android.annotation.SuppressLint
 import android.app.Application
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -72,6 +73,7 @@ fun UpdateScreen(
 ) {
     val context = LocalContext.current
     val coffeeId = viewModel.getCoffeeById(itemId).collectAsState(initial = null).value
+    val openDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -111,7 +113,8 @@ fun UpdateScreen(
                             var newLocation by remember { mutableStateOf(coffeeItem.location) }
                             var newDescription by remember { mutableStateOf(coffeeItem.description) }
                             var newRating by remember { mutableIntStateOf(coffeeItem.ratingBar) }
-                            val openDialog = remember { mutableStateOf(false) }
+                            var newDate by remember { mutableStateOf(coffeeItem.date) }
+
                             Card(
                                 modifier = Modifier
                                     .height(380.dp)
@@ -134,6 +137,7 @@ fun UpdateScreen(
                                             modifier = Modifier
                                                 .fillMaxWidth(),
                                             shape = RoundedCornerShape(4.dp) ,
+                                            border = BorderStroke(1.dp, Color.Black) ,
                                             onClick = {
                                                 openDialog.value = true
                                             }
@@ -142,7 +146,7 @@ fun UpdateScreen(
                                                 modifier = Modifier.fillMaxWidth()
                                             ) {
                                                 Text(
-                                                    text = "Date: ${viewModel.dateResult.value}",
+                                                    text = "Date: $newDate",
                                                     textAlign = TextAlign.Start,
                                                     fontWeight = FontWeight.Normal,
                                                     fontSize = 16.sp,
@@ -167,6 +171,7 @@ fun UpdateScreen(
                                                         date = Tools.convertLongToTime(datePickerState.selectedDateMillis!!)
                                                     }
                                                     viewModel.setDateResult(date)
+                                                    newDate = date
                                                 },
                                                     enabled = confirmEnabled.value
                                                 ) {
@@ -238,7 +243,7 @@ fun UpdateScreen(
                             Button(
                                 modifier = Modifier.bounceClick() ,
                                 onClick = {
-                                    viewModel.updateCoffee(coffeeItem.id,newLocation, newDescription, newRating)
+                                    viewModel.updateCoffee(coffeeItem.id, newDate ,newLocation, newDescription, newRating)
                                     Toast.makeText(context,"Successfully updated", Toast.LENGTH_SHORT).show()
                                     navController.navigate(Screen.Notes.route)
                                 } ,

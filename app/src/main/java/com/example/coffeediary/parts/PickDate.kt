@@ -1,9 +1,7 @@
 package com.example.coffeediary.parts
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,6 +44,7 @@ fun DatePickerDemo(viewModel: CoffeeViewModel) {
             modifier = Modifier
                 .fillMaxWidth(),
             shape = RoundedCornerShape(4.dp) ,
+            border = BorderStroke(1.dp, Color.Black) ,
             onClick = {
                 openDialog.value = true
             }
@@ -95,11 +94,6 @@ fun DatePickerDemo(viewModel: CoffeeViewModel) {
 
 class Tools {
     companion object {
-        fun openLink(mContext: Context, url: String) {
-            val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse(url)
-            mContext.startActivity(openURL)
-        }
 
         @SuppressLint("SimpleDateFormat")
         fun convertLongToTime(time: Long): String {
