@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.coffeediary.parts.Converters
 import com.example.coffeediary.room.model.Coffees
 
-@Database(entities = [Coffees::class], version = 2, exportSchema = false)
+@Database(entities = [Coffees::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class CoffeeDatabase : RoomDatabase() {
 
@@ -25,6 +25,13 @@ abstract class CoffeeDatabase : RoomDatabase() {
 
         }
 
+        private val migration_2_3 = object : Migration(2, 3) {
+            override fun migrate(db : SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE coffees ADD COLUMN imagePath TEXT NOT NULL DEFAULT('')")
+            }
+
+        }
+
         @Volatile
         private var INSTANCE: CoffeeDatabase? = null
         fun getDatabase(context: Context): CoffeeDatabase {
@@ -35,7 +42,7 @@ abstract class CoffeeDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(context.applicationContext,
                     CoffeeDatabase::class.java, "coffee_db")
-                    .addMigrations(migration_1_2)
+                    .addMigrations(migration_1_2, migration_2_3)
                     .build()
                 INSTANCE = instance
                 return instance

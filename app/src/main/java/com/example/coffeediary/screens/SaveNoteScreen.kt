@@ -32,9 +32,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.coffeediary.R
 import com.example.coffeediary.bounceClick
 import com.example.coffeediary.navigation.Screen
 import com.example.coffeediary.parts.SaveCard
+import com.example.coffeediary.parts.titleToImageMap
 import com.example.coffeediary.room.model.Coffees
 import com.example.coffeediary.ui.theme.CoffeeDiaryTheme
 import com.example.coffeediary.ui.theme.bebasNeueFamily
@@ -84,15 +86,18 @@ fun SaveNoteScreen(
             Button(
                 modifier = Modifier.bounceClick(),
                 onClick = {
-                    viewModel.insertCoffee(
-                        Coffees(
-                            title = title,
-                            location = viewModel.inputLocation.value,
-                            description = viewModel.inputDescription.value,
-                            date = viewModel.dateResult.value,
-                            ratingBar = viewModel.inputRatingBar.value
-                        )
+                    val imagePath = viewModel.imagePath.value?.takeIf { it.isNotEmpty() }
+                        ?: getDefaultImagePath(title) // Call the function to get a default image path
+
+                    val coffeeEntry = Coffees(
+                        title = title,
+                        location = viewModel.inputLocation.value,
+                        description = viewModel.inputDescription.value,
+                        date = viewModel.dateResult.value,
+                        ratingBar = viewModel.inputRatingBar.value,
+                        imagePath = imagePath // Use the valid image path
                     )
+                    viewModel.insertCoffee(coffeeEntry)
                     navController.navigate(Screen.Notes.route)
                     viewModel.clearAllInputs()
                           },
@@ -108,6 +113,13 @@ fun SaveNoteScreen(
         }
     })
 }
+
+private fun getDefaultImagePath(title: String): String {
+    // Return the path to your default image resource
+    val imageResource = titleToImageMap[title] ?: R.drawable.espresso
+    return "android.resource://com.example.coffeediary/${imageResource}"
+}
+
 
 private val NavController.canGoBack: Boolean // pokud vícekrát klikneme na back button, vráti nás to jen o jeden klik
     get() = this.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED

@@ -1,6 +1,9 @@
 package com.example.coffeediary.screens
 
 import android.app.Application
+import android.content.Context
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -69,6 +72,7 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
     private val _inputLocation = MutableStateFlow("")
     val inputLocation = _inputLocation.asStateFlow()
+
     fun setInputLocation(location: String) {
         _inputLocation.tryEmit(location)
     }
@@ -85,6 +89,24 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
     fun setInputRatingBar(rating: Int) {
         _inputRatingBar.tryEmit(rating)
+    }
+
+    private val _imagePath = MutableStateFlow<String?>(null)
+    val imagePath = _imagePath.asStateFlow()
+
+    fun setImagePath(path: String?) {
+        _imagePath.tryEmit(path)
+    }
+
+    fun getImageFilePath(context: Context, imageUri: Uri): String? {
+        val cursor = context.contentResolver.query(imageUri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                return it.getString(columnIndex)
+            }
+        }
+        return null
     }
 
     fun clearAllInputs() {
