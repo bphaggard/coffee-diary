@@ -113,5 +113,7 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
         _inputLocation.tryEmit("")
         _inputDescription.tryEmit("")
         _inputRatingBar.tryEmit(0)
+        _imagePath.tryEmit("")
+        _dateResult.tryEmit("Select")
     }
 }
