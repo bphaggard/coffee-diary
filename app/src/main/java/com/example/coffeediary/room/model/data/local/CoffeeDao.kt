@@ -36,6 +36,6 @@ interface CoffeeDao {
     @Query("SELECT * FROM Coffees ORDER BY LOCATION")
     fun getCoffeeByLocation(): Flow<List<Coffees>>
 
-    @Query("UPDATE Coffees SET date = :newDate, location = :newLocation, description = :newDescription, ratingBar = :newRating WHERE id = :coffeeId")
-    suspend fun updateCoffee(coffeeId: Int, newDate:String, newLocation: String, newDescription: String, newRating: Int)
+    @Query("UPDATE Coffees SET date = :newDate, location = :newLocation, description = :newDescription, ratingBar = :newRating, imagePath = :newImagePath WHERE id = :coffeeId")
+    suspend fun updateCoffee(coffeeId: Int, newDate:String, newLocation: String, newDescription: String, newRating: Int, newImagePath: String)
 }

@@ -46,9 +46,9 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
         }
     }
 
-    fun updateCoffee(id: Int, newDate: String, newLocation: String, newDescription: String, newRating: Int) {
+    fun updateCoffee(id: Int, newDate: String, newLocation: String, newDescription: String, newRating: Int, newImagePath: String) {
         viewModelScope.launch {
-            coffeeRepository.updateCoffee(id, newDate ,newLocation, newDescription, newRating)
+            coffeeRepository.updateCoffee(id, newDate ,newLocation, newDescription, newRating, newImagePath)
         }
     }
 
@@ -67,7 +67,6 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
     fun setDateResult(date: String) {
         _dateResult.tryEmit(date)
-        Log.d("CoffeeViewModel", "DateResult has been set to: $date")
     }
 
     private val _inputLocation = MutableStateFlow("")

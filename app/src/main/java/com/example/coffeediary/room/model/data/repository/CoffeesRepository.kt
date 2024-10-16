@@ -16,8 +16,8 @@ class CoffeesRepository(application : Application) {
 
     val readAllCoffees: Flow<List<Coffees>> = coffeeDao.getAllCoffeeType()
 
-    suspend fun updateCoffee(id: Int, newDate: String, newLocation: String, newDescription: String, newRating: Int) {
-        coffeeDao.updateCoffee(id, newDate ,newLocation, newDescription, newRating)
+    suspend fun updateCoffee(id: Int, newDate: String, newLocation: String, newDescription: String, newRating: Int, newImagePath: String) {
+        coffeeDao.updateCoffee(id, newDate ,newLocation, newDescription, newRating, newImagePath)
     }
 
     suspend fun insertCoffeeType(coffees : Coffees) {

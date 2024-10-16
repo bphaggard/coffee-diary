@@ -2,7 +2,11 @@ package com.example.coffeediary.screens
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,11 +16,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.rounded.AddAPhoto
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -114,10 +120,22 @@ fun UpdateScreen(
                             var newDescription by remember { mutableStateOf(coffeeItem.description) }
                             var newRating by remember { mutableIntStateOf(coffeeItem.ratingBar) }
                             var newDate by remember { mutableStateOf(coffeeItem.date) }
+                            var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+
+                            val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+                                contract = ActivityResultContracts.PickVisualMedia(),
+                                onResult = { pickedUri ->
+                                    selectedImageUri = pickedUri
+                                    val imagePath = selectedImageUri?.let { selectedUri ->
+                                        viewModel.getImageFilePath(context, selectedUri)
+                                    }
+                                    viewModel.setImagePath(imagePath)
+                                }
+                            )
 
                             Card(
                                 modifier = Modifier
-                                    .height(380.dp)
+                                    .wrapContentHeight()
                                     .fillMaxWidth(0.85f),
                                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
                             ) {
@@ -237,15 +255,40 @@ fun UpdateScreen(
                                             }
                                         )
                                     }
+                                    Spacer(modifier = Modifier.padding(10.dp))
+                                    Button(
+                                        onClick = {
+                                            singlePhotoPickerLauncher.launch(
+                                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                            )
+                                            viewModel.imagePath
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.AddAPhoto,
+                                            tint = MaterialTheme.colorScheme.onBackground,
+                                            contentDescription = "add button"
+                                        )
+                                        Text(
+                                            text = "Select coffee photo",
+                                            Modifier.padding(start = 10.dp),
+                                            color = MaterialTheme.colorScheme.onBackground
+                                        )
+                                    }
                                 }
                             }
                             Spacer(modifier = Modifier.padding(15.dp))
                             Button(
                                 modifier = Modifier.bounceClick() ,
                                 onClick = {
-                                    viewModel.updateCoffee(coffeeItem.id, newDate ,newLocation, newDescription, newRating)
+                                    viewModel.imagePath.value?.let {
+                                        viewModel.updateCoffee(coffeeItem.id, newDate ,newLocation, newDescription, newRating,
+                                            it
+                                        )
+                                    }
                                     Toast.makeText(context,"Successfully updated", Toast.LENGTH_SHORT).show()
                                     navController.navigate(Screen.Notes.route)
+                                    viewModel.clearAllInputs()
                                 } ,
                                 shape = RoundedCornerShape(20.dp) ,
                                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
