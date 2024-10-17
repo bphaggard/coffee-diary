@@ -1,7 +1,9 @@
 package com.example.coffeediary.parts
 
 import android.app.Application
+import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -71,9 +73,19 @@ fun SaveCard(
         onResult = { pickedUri ->
             selectedImageUri = pickedUri
             val imagePath = selectedImageUri?.let { selectedUri ->
-                coffeeViewModel.getImageFilePath(context, selectedUri)
+                coffeeViewModel.saveImageToInternalStorage(context, selectedUri)
             }
             coffeeViewModel.setImagePath(imagePath)
+            try {
+                pickedUri?.let {
+                    context.contentResolver.takePersistableUriPermission(
+                        it,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    )
+                }
+            } catch (e: SecurityException) {
+                Log.e("PhotoPicker", "Failed to take persistable URI permission", e)
+            }
         }
     )
 

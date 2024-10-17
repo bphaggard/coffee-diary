@@ -2,8 +2,8 @@ package com.example.coffeediary.screens
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
 
@@ -97,16 +98,22 @@ class CoffeeViewModel(appObj: Application) : AndroidViewModel(appObj) {
         _imagePath.tryEmit(path)
     }
 
-    fun getImageFilePath(context: Context, imageUri: Uri): String? {
-        val cursor = context.contentResolver.query(imageUri, null, null, null, null)
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                return it.getString(columnIndex)
+    fun saveImageToInternalStorage(context: Context, uri: Uri): String? {
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri)
+            val file = File(context.filesDir, "image_${System.currentTimeMillis()}.jpg")
+            inputStream?.use { input ->
+                file.outputStream().use { output ->
+                    input.copyTo(output)
+                }
             }
+            file.absolutePath
+        } catch (e: Exception) {
+            Log.e("PhotoPicker", "Failed to save image", e)
+            null
         }
-        return null
     }
+
 
     fun clearAllInputs() {
         _inputLocation.tryEmit("")

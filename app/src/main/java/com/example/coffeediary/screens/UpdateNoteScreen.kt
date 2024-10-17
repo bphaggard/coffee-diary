@@ -133,7 +133,7 @@ fun UpdateScreen(
                                 onResult = { pickedUri ->
                                     selectedImageUri = pickedUri
                                     val imagePath = selectedImageUri?.let { selectedUri ->
-                                        viewModel.getImageFilePath(context, selectedUri)
+                                        viewModel.saveImageToInternalStorage(context, selectedUri)
                                     }
                                     viewModel.setImagePath(imagePath)
                                 }
