@@ -8,6 +8,7 @@ Jetpack Compose
 Dynamic Navigation 
 Room DB
 Sorting by: Title, Date and Rating
+Select coffee photo from photo gallery
 ```
 
 Design made in Figma
